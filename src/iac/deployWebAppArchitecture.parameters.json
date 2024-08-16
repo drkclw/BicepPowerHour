@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "value": "BicepPowerHour"
+        },
+        "location": {
+            "value": "eastus"
+        },        
+        "sqlServerName": {
+            "value": "ContactWebDBServer"
+        },
+        "sqlDbName": {
+            "value": "ContactWebDB"
+        },
+        "sqlLogin": {
+            "value": "contactwebdbuser"
+        },
+        "sqlPassword": {
+            "value": "workshopDbPwd#54321!"
+        },
+        "clientIpAddress": {
+            "value": "104.230.227.233"
+        },        
+        "environment": {
+            "value": "dev"        
+        },
+        "logAnalyticsWorkspaceName": {
+            "value": "contactWebAnalytics"
+        },
+        "appInsightsName": {
+            "value": "contactWebAppInsights"
+        },
+        "webAppName": {
+            "value": "ContactWeb"
+        },
+        "appServicePlanName": {
+            "value": "contactWebASP"
+        },
+        "appServicePlanSku": {
+            "value": "F1"
+        },
+        "keyVaultName": {
+            "value": "kvContactWeb"
+        },
+        "identityDBConnectionStringKey": {
+            "value": "ConnectionStrings:DefaultConnection"
+        },
+        "managerDBConnectionStringKey": {
+            "value": "ConnectionStrings:MyContactManager"
+        }
+    }
+}
