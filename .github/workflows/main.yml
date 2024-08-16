@@ -2,7 +2,7 @@ name: "Bicep Deploy Resources"
 
 on:
   push:
-    branches: [ main ]
+    branches: [ notautomated ]
   workflow_dispatch:
 
 env: 
