@@ -9,9 +9,9 @@ env:
   CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }} 
   AZURE_TENANT_ID:  ${{ secrets.AZURE_TENANT_ID }}
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  AZURE_CLIENT_ID_CONTACTWEB_DEV: '${{ secrets.AZURE_CLIENT_ID_CONTACTWEB_DEV }}'
-  TEMPLATE: 'iac/deployContactWebArchitecture.bicep'
-  PARAMETERS: 'iac/deployContactWebArchitecture.parameters.json'  
+  AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
+  TEMPLATE: 'src/iac/deployContactWebArchitecture.bicep'
+  PARAMETERS: 'src/iac/deployContactWebArchitecture.parameters.json'  
   DEPLOYMENT_NAME: 'BicepDeployResources'
   REGION: 'eastus'
   
