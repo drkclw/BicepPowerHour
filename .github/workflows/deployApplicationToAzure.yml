@@ -1,0 +1,62 @@
+name: Build and deploy ContactWeb
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  APP_PACKAGE_PATH: 'myapp'
+  # set this to the dotnet version to use
+  DOTNET_VERSION: '6.0.x' 
+  # Put your app name here
+  AZURE_WEB_APP_NAME: 'ContactWeb-frobmk33mxq' 
+  # staging by default but you could change to Production if you are not creating a slot 
+  AZURE_WEB_APP_SLOT: 'Production' 
+  # leverage secrets for the umi credential
+  AZURE_TENANT_ID:  ${{ secrets.AZURE_TENANT_ID }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_CLIENT_ID: '${{ secrets.AZURE_CLIENT_ID }}'
+  #Working Directory [must map to the location of your .NET Project]
+  WORKING_DIRECTORY: 'src/app/ContactWebEFCore6'  
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:  
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '${{ env.DOTNET_VERSION }}'
+          include-prerelease: true
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+        working-directory: '${{ env.WORKING_DIRECTORY }}'
+        
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/${{ env.APP_PACKAGE_PATH }}
+        working-directory: '${{ env.WORKING_DIRECTORY }}'
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ vars.APP_NAME }}
+          slot-name: ${{ vars.SLOT_NAME }}
+          package: ${{ env.DOTNET_ROOT }}/${{ env.APP_PACKAGE_PATH }}
