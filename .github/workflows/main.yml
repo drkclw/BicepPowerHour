@@ -23,8 +23,6 @@ jobs:
   dev-deploy:
     name: Dev Deploy
     runs-on: ubuntu-latest
-    environment:
-      name: 'dev'
 
     steps:
       - name: Checkout Code
